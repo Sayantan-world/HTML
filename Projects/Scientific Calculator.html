@@ -1,0 +1,322 @@
+<!Doctype html>
+<html>
+<!--Created by SAYANTAN PAL-->
+	<head>
+		<title>SCIENTIFIC CALCULATOR</title>
+	<style>
+	/*Background of the calculator*/
+	#container
+	{
+		background-color: #4b5162;
+ 		position: relative;
+		height:500px;
+  		width: 350px;
+  		border: 2px groove black;
+  		border-radius: 8px;
+  		margin: 0px auto;
+  		padding: 20px 20px 100px 20px;
+		box-shadow:2px 5px 0px 3px #999999,10px 10px 13px 6px #97a8c1
+	}
+	/*Text style*/
+	#agh p{
+		color: #d0ffad;
+  		font-size: 14px;
+  		font-weight: 900;
+		}
+	/*Screen Display config*/
+	.display
+	{
+		background-color:#e6ffd3;
+  		position: relative;
+  		display: block;
+  		width: 300px;
+		height: 60px;
+		top:10px;
+		left:10px;
+  		padding: 10px;
+  		box-shadow: 4px 0px 12px black inset;	
+	}
+	/*Input display*/
+	.display input
+	{
+		background-color:#e6ffd3;
+  		position: relative;
+  		display: block;
+  		width: 296px;
+		height: 56px;
+		top:-9px;
+		left:-8px;
+  		color: black;
+  		font-size: 25px;
+  		padding: 10px;
+		text-align: right;
+  		box-shadow: 4px 0px 12px black inset;		
+	}
+	/*BUTTONS position*/
+	.buttons
+	{
+		position: relative;
+		top: 20px;
+		left: 5px;
+		
+	}
+	/*BUTTONS DESIGN*/
+	.button{
+		color: white;
+  		background: #32a31f;
+  		width: 50px;
+		height: 30px;
+  		font-size: 15px;
+  		font-weight: 900;
+  		border-radius: none;
+  		margin-left: 13px;
+  		margin-top: 10px;
+		}
+	/*SEPARATE DESIGN FOR EACH BUTTONS*/
+	.button.blue
+	{
+		color: black;
+		background: #d1e4ff;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	.button.red
+	{
+		background: #ff0000;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	.button.green
+	{
+		color: black;
+		background: #d0ffad;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	.button.yellow
+	{
+		font-size: 15px;
+		color: black;
+		background: #ffd95e;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	.button.violet
+	{
+		font-size: 10px;
+		color: white;
+		background: #821bd6;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	.button.sky
+	{
+		font-size: 15px;
+		color: white;
+		background: #1298c9;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	.button.pink
+	{
+		font-size: 10px;
+		color: white;
+		background: #ce04c1;
+		border-bottom: 2px solid #647489;
+		border-top: 2px solid #647489;
+	}
+	
+		/*USER HOVERS WITH MOUSE EFFECT*/
+		.button:hover {
+  		background-color: #ffc87c;
+  		color: #000000;
+		}
+	p
+	{
+		line-height: 20px
+	}
+		button 
+		{
+  		display: inline-block;
+  		border-radius: 3px;
+  		border: none;
+  		font-size: 0.9rem;
+  		padding: 0.4rem 0.8em;
+  		background: #69c773;
+  		border-bottom: 1px solid #498b50;
+  		color: white;
+  		font-weight: bold;
+  		margin: 0 0.25rem;
+  		text-align: center;
+		}		
+
+	button:hover, button:focus 
+	{
+  	opacity: 0.75;
+  	cursor: pointer;
+	}
+
+	button:active 
+	{
+  	opacity: 1;
+ 	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1) inset;
+	}
+	</style>
+	
+	</head>
+	<body>
+	<div id="container">
+	<div class="display"><form name="calculator"><input type="text" name="show" id="scn" size="20" readonly maxlength="50"></form></div>
+	<!--*************Each button defined and created*****************************-->
+	<div class="buttons">
+	<p>
+		<input type="button" value="sin" class="button yellow" onclick="forsin(calculator.show.value)">
+		<input type="button" value="cos" class="button yellow"  onclick="forcos(calculator.show.value)">
+		<input type="button" value="tan" class="button yellow"  onclick="fortan(calculator.show.value)">
+		<input type="button" value="+/-" class="button yellow" onclick="changeSign(calculator.show.value)">
+		<input type="button" value="!" class="button yellow" onclick="fact(calculator.show.value)">
+	</p>
+	<p>
+		<input type="button" value="&radic;" class="button blue"  onclick="calculator.show.value= Math.sqrt(calculator.show.value)">
+		<input type="button" value="sqr" class="button blue"  onclick="calculator.show.value= Math.pow(calculator.show.value,2)">
+		<input type="button" value="^" class="button blue" onclick="calculator.show.value= Math.pow(calculator.show.value,calculator.show.value)">
+		<input type="button" value="log" class="button blue" onclick="calculator.show.value= Math.log(calculator.show.value)">
+		<input type="button" value="In" class="button blue" onclick="calculator.show.value= Math.E">
+	</p>
+	<p>
+		<input type="button" value="PRIME" class="button violet"  onclick="prime(calculator.show.value)">
+		<input type="button" value="(" class="button blue" onclick="calculator.show.value+='('">
+		<input type="button" value=")" class="button blue" onclick="calculator.show.value+=')'">
+		<input type="button" value="M+" class="button blue" onclick="calculator.show.value+='M+'">
+		<input type="button" value="MOD" class="button blue" onclick="calculator.show.value+='%'">
+	</p>
+	<p>
+		<input type="button" value="LOVE" class="button pink" onclick="love()">
+		<input type="button" value="GUESS" class="button violet" onclick="guess(calculator.show.value)">
+		<input type="button" value="BIN" class="button sky"  onclick="bin(calculator.show.value)">
+		<input type="button" value="OCT" class="button sky" onclick="oct(calculator.show.value)">
+		<input type="button" value="HEX" class="button sky" onclick="hexa(calculator.show.value)">
+	</p>
+	<p>
+		<input type="button" value="7" class="button arc" onclick="calculator.show.value+='7'">
+		<input type="button" value="8" class="button arc" onclick="calculator.show.value+='8'">
+		<input type="button" value="9" class="button arc" onclick="calculator.show.value+='9'">
+		<input type="button" value="DEL" class="button red" onclick="calculator.show.value=calculator.show.value.substring(0,calculator.show.value.length-1)">
+		<input type="button" value="AC" class="button red" onclick="calculator.show.value=''">
+	</p>
+	 <p>
+		<input type="button" value="4" class="button arc" onclick="calculator.show.value+='4'">
+		<input type="button" value="5" class="button arc" onclick="calculator.show.value+='5'">
+		<input type="button" value="6" class="button arc" onclick="calculator.show.value+='6'">
+		<input type="button" value="x" class="button arc" onclick="calculator.show.value+='*'">
+		<input type="button" value="/" class="button arc" onclick="calculator.show.value+='/'">
+	</p>
+	 <p>
+		<input type="button" value="1" class="button arc" onclick="calculator.show.value+='1'">
+		<input type="button" value="2" class="button arc" onclick="calculator.show.value+='2'">
+		<input type="button" value="3" class="button arc" onclick="calculator.show.value+='3'">
+		<input type="button" value="+" class="button arc" onclick="calculator.show.value+='+'">
+		<input type="button" value="-" class="button arc" onclick="calculator.show.value+='-'">
+	</p>
+	 <p>
+		<input type="button" value="0" class="button arc" onclick="calculator.show.value+='0'">
+		<input type="button" value="." class="button arc" onclick="calculator.show.value+='.'">
+		<input type="button" value="EXP" class="button arc" onclick="calculator.show.value= Math.exp(calculator.show.value)">
+		<input type="button" value="π" class="button arc" onclick="calculator.show.value+= Math.PI"> 
+		<input type="button" value="ANS" class="button green" onclick="calculator.show.value = eval(calculator.show.value)"> 
+	</p>
+	<div id="agh">
+            <p>------------------------------------      MADE BY SAYANTAN PAL</p><!--TAG-->
+          </div>
+	<script type="text/javascript">
+	function changeSign(input)//Sign change
+	{
+	if(calculator.show.value.substring(0,1)=="-")
+		calculator.show.value=calculator.show.value.substring(1,calculator.show.value.length)
+	else
+		calculator.show.value="-"+calculator.show.value
+	}
+	//FACTORIAL CALCULATION *****************************************
+	function fact(input)
+	{
+		var i; var j=1;
+		for(i=1;i<=input;i++)
+		j*=i;
+	calculator.show.value=j
+    }
+	//TRIG VALUES CONVERTED TO DEG from RAD
+	function forsin(input)
+	{
+		calculator.show.value=Math.sin(input*Math.PI/180);
+	}
+	function forcos(input)
+	{
+		calculator.show.value=Math.cos(input*Math.PI/180);
+	}
+	function fortan(input)
+	{
+		calculator.show.value=Math.tan(input*Math.PI/180);
+	}
+	//PRIME CALCULATION**********************************************
+	function prime(input)
+	{
+		var i; var c=0;
+		for(i=1;i<=input;i++)
+		{
+		if(input%i==0)
+		c++;
+		}
+		if(c==2)
+		calculator.show.value="YES";
+		else
+		calculator.show.value="NO";
+    }
+	//DECI TO BINARY**************************************************
+	function bin(input)
+	{
+  		var bin ="";
+  		while (input > 0) 
+	{
+  		bin = input % 2 + bin;
+  		input >>= 1; 
+  	 }
+
+		calculator.show.value= bin;
+	}
+	//DECI TO OCT****************************************************
+	function oct(input)
+	{
+  		var oct ="";
+  		while (input > 0) 
+	{
+  		oct = input % 8 + oct;
+  		input >>= 3; 
+  	 }
+
+		calculator.show.value= oct;
+	}	
+	//DECI TO HEX****************************************************
+	function hexa(input)
+	{
+  	var hex = Number(input).toString(16);
+  	hex = "000000".substr(0, 6 - hex.length) + hex;
+		calculator.show.value= hex;
+	}
+	//RANDOM (1-10)****************************************************
+	function guess(input)
+	{
+		var x = Math.floor((Math.random() * 10) + 1);
+		if(x==input)
+		calculator.show.value="CORRECT !!";
+		else
+		calculator.show.value="CORRECT WAS =  "+x;
+	}
+	//RANDOM (1-100)
+	function love()
+	{
+		var x = Math.floor((Math.random() * 100) + 1);
+		calculator.show.value="% LOVE CHANCE = "+x;
+	}		
+</script>
+	</body>
+</html>

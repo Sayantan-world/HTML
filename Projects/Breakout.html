@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- GAME DEVELOPED BY SAYANTAN PAL      DATE : 26.06.2018-->
+<!-- If U are a coder and u want to write or modify my code u may take a look at  LINK : https://developer.mozilla.org/en-US/docs/Games/Tutorials-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>BREAKOUT</title>
+	<h1>BREAKOUT VERSION 1.0 (BETA)</h1>
+	<p>AUTHOR : SAYANTAN PAL<br>New updates like sounds and other improvements coming soon in STABLE release</p>
+    <style>
+    	* { padding: 0; margin: 0; background-color: #c4e7ff }
+		h1
+		{
+		text-align: center; color:#004472;font-family: 'Garamond';;
+		}
+		p
+		{
+		text-align: center;color:#c11f1f;font-size:20px;font-family: 'Garamond';
+		}
+		button 
+		{
+        position: relative;
+		top: 20px;
+		left: 460px;
+  		display: inline-block;
+  		border-radius: 3px;
+  		border: none;
+  		font-size: 0.9rem;
+  		padding: 0.4rem 0.8em;
+  		background: #69c773;
+  		border-bottom: 1px solid #498b50;
+  		color: white;
+  		font-weight: bold;
+  		margin: 0 0.25rem;
+  		text-align: center;
+		}		
+
+		button:hover, button:focus 
+		{
+  		opacity: 0.75;
+  		cursor: pointer;
+		}
+
+		button:active 
+		{
+  		opacity: 1;
+ 		box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1) inset;
+		}
+    	canvas { animation: glow 1s infinite; border: 5px solid   #1f1187  ; border-style:groove; border-radius: 10px 			10px;background: #4b5162; display: block; margin: 0 auto; }
+		/*@keyframes glow {
+    	50% {box-shadow: 10px 10px 10px #afffa4;} }*//* -U MAY UNCOMMENT THIS LINE IF U HAVE A QUAD CORE or OCTA CORE 			CPU(i5 8th Generation and above)*/
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="900" height="500"></canvas>
+<div class="controls">
+    <button type="button" id="startBtn">PLAY</button>
+    <button type="button" id="stopBtn">PAUSE</button>
+  </div>
+<script>
+//VARIABLES DECLARED****************************************************************
+alert("DONT RUN THIS CODE IF U R NOT USING A PC OR A LAPTOP U WILL REQUIRE A MOUSE OR A KEYBOARD")
+var canvas = document.getElementById("myCanvas");
+// Get the buttons.
+var startBtn = document.getElementById('startBtn');
+var stopBtn = document.getElementById('stopBtn');
+//***************************************************************************************
+var requestID;// A variable to store the requestID.
+var ctx = canvas.getContext("2d");
+var ballRadius = 10;
+var x = canvas.width/2;
+var y = canvas.height-30;
+var dx = 2;
+var dy = -2;
+var paddleHeight = 10;
+var paddleWidth = 75;
+var paddleX = (canvas.width-paddleWidth)/2;
+var rightPressed = false;
+var leftPressed = false;
+var brickRowCount = 11;
+var brickColumnCount = 8;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 5;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 10;
+var score = 0;
+var lives = 3;
+//Brick array***************************************************************************************
+var bricks = [];
+for(var c=0; c<brickColumnCount; c++) {
+  bricks[c] = [];
+  for(var r=0; r<brickRowCount; r++) {
+    bricks[c][r] = { x: 0, y: 0, status: 1 };
+  }
+}
+
+document.addEventListener("keydown", keyDownHandler, false);//key controll
+document.addEventListener("keyup", keyUpHandler, false);//key controll
+document.addEventListener("mousemove", mouseMoveHandler, false);//mouse control
+// Animate.
+	function animate() {
+		requestID = requestAnimationFrame(animate);}
+//Real movements of pad using mouse or keys*************************************************************
+function keyDownHandler(e) 
+{
+  if(e.keyCode == 39) 
+	{
+    rightPressed = true;
+ 	}
+  else if(e.keyCode == 37) 
+	{
+    leftPressed = true;
+ 	}
+}
+function keyUpHandler(e) 
+{
+  if(e.keyCode == 39) 
+	{
+    rightPressed = false;
+    }
+  else if(e.keyCode == 37) 
+	{
+    leftPressed = false;
+	}
+}
+function mouseMoveHandler(e) 
+{
+  var relativeX = e.clientX - canvas.offsetLeft;
+  if(relativeX > 0 && relativeX < canvas.width) 
+  {
+    paddleX = relativeX - paddleWidth/2;
+  }
+}
+//BRICK COLLISION DETECTION & SCORE COUNT*****************************************************************
+function collisionDetection() 
+{
+  for(var c=0; c<brickColumnCount; c++) 
+	{
+    for(var r=0; r<brickRowCount; r++) 
+	 {
+      var b = bricks[c][r];
+      if(b.status == 1) 
+		{
+        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) 
+		{
+          dy = -dy;
+          b.status = 0;
+          score++;
+		  dy=dy+0.1;
+          if(score == brickRowCount*brickColumnCount) 
+		  {
+            alert("YOU WIN, CONGRATS!!!");
+            document.location.reload();
+          }
+        }
+      }
+    }
+  }
+}
+//FUNCTION to draw ball**************************************************************************************
+function drawBall() 
+{
+  ctx.beginPath();
+  ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+  ctx.fillStyle = "#ff0000";
+  ctx.fill();
+  ctx.closePath();
+}
+//Wooden paddel described***************************************************************************************
+function drawPaddle() 
+{
+  ctx.beginPath();
+  ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+  ctx.fillStyle = "#a87800";
+  ctx.fill();
+  ctx.closePath();
+}
+//BRICKS COLOR and POSITION defined
+function drawBricks() {
+  for(var c=0; c<brickColumnCount; c++) 
+	{
+    for(var r=0; r<brickRowCount; r++) 
+	 {
+      if(bricks[c][r].status == 1) 
+	  {
+        var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
+        var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+        bricks[c][r].x = brickX;
+        bricks[c][r].y = brickY;
+        ctx.beginPath();
+        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+		if((c+r)%2==0)
+        {ctx.fillStyle = "#b2edff";}
+		else
+		{ctx.fillStyle = "#0088b2";}
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+  }
+}
+//SHOW THE SCORE ON THE SCREEN (DYNAMIC)
+function drawScore() 
+{
+  ctx.font = "25px Garamond";
+  ctx.fillStyle = "red";
+  ctx.fillText("Score: "+score, 8, 20);
+}
+//SHOW THE LIVES ON THE SCREEN (DYNAMIC)
+function drawLives() 
+{
+  ctx.font = "25px Garamond";
+  ctx.fillStyle = "red";
+  ctx.fillText("Lives: "+lives, canvas.width-85, 20);
+}
+//Main function of dynamic canvas**************************************************************************
+function draw() 
+{
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBricks();
+  drawBall();
+  drawPaddle();
+  drawScore();
+  drawLives();
+  collisionDetection();//Direction reversing
+
+  if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) 
+  {
+    dx = -dx;
+  }
+  if(y + dy < ballRadius) 
+  {
+    dy = -dy;
+  }
+  else if(y + dy > canvas.height-ballRadius) 
+  {
+    if(x > paddleX && x < paddleX + paddleWidth) 
+    {
+      dy = -dy;
+    }
+    else 
+     {
+      lives--;
+      if(!lives) 
+	  {
+        alert("GAME OVER");
+        document.location.reload();//Calling it again to reload
+      }
+      else 
+	  {
+        x = canvas.width/2;
+        y = canvas.height-30;
+        dx = 3;
+        dy = -3;
+        paddleX = (canvas.width-paddleWidth)/2;
+      }
+    }
+  }
+
+  if(rightPressed && paddleX < canvas.width-paddleWidth) 
+  {
+    paddleX += 7;
+  }
+  else if(leftPressed && paddleX > 0) {
+    paddleX -= 7;
+  }
+
+  x += dx;
+  y += dy;
+  requestID = requestAnimationFrame(draw);
+}
+draw();
+//**************************************************************************************************
+	// Event listener for the start button.
+	startBtn.addEventListener('click', function(e) {
+		e.preventDefault();
+
+		// Start the animation.
+		requestID = requestAnimationFrame(draw);
+	});
+
+
+	// Event listener for the stop button.
+	stopBtn.addEventListener('click', function(e) {
+		e.preventDefault();
+
+		// Stop the animation;
+		cancelAnimationFrame(requestID);
+	});
+
+</script>
+
+</body>
+</html>
