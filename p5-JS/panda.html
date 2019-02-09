@@ -1,0 +1,103 @@
+<!--
+Author : Sayantan Pal
+
+Date : 27.01.2019
+
+Credits : Daniel Shiffman , follow his youtube --  https://www.youtube.com/user/shiffman
+
+
+// CODE :Panda_face
+
+// TODO : blinking eyes(complete) ,eye follows mouse, other animations
+-->
+ <!DOCTYPE html>
+  </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <script>
+var i=50;
+j=-1;
+var x=100;
+function setup() {
+  createCanvas(600, 600);
+}
+
+function draw() {
+  background(mouseX,mouseY,50);//greyscale (ranges from 0 to 255)
+  i++;
+  if(i==200)
+    i=50;
+  fill(0);
+
+  //EARS
+  ellipse(150, 150, 150, 150);
+  ellipse(450, 150, 150, 150);
+  fill(50);
+  ellipse(150, 150, 120, 120);
+  ellipse(450, 150, 120, 120);
+  fill(255, 150, 150);
+  ellipse(150, 150, 80, 80);
+  ellipse(450, 150, 80, 80);
+
+  //FACE
+  fill(255);
+  strokeWeight(5);
+  ellipse(300, 260, 370, 330);
+
+  //EYES
+  fill(0);
+  translate(width / 2, height / 2);
+  rotate(PI / 3);
+  ellipse(-10, -100, 160, 100);
+  fill(100);
+  ellipse(-10, -100, 80, 50);
+  rotate(PI / 3);
+  fill(0);
+  ellipse(-10, 100, 160, 100);
+  fill(100);
+  ellipse(-10, 100, 80, 50);
+  rotate(PI / 3);
+  fill(255, x, x, 150);//blushing effect
+  x=x+j;
+  if(x==0)
+    j=+1;
+  if(x==150)
+    j=-1;
+  noStroke();
+  ellipse(110, -25, 40, 20);
+  ellipse(-110, -25, 40, 20);
+  fill(255);
+  stroke(0);
+  strokeWeight(5);
+  ellipse(0, -15, 180, 150);
+  ellipse(80, 60, 30, 30);
+  ellipse(-80, 60, 30, 30);
+  fill(0);
+  if(i<=120 || i>=140)
+  {
+  arc(80, 60, 15, 15, 0, PI + QUARTER_PI);
+  arc(-80, 60, 15, 15, 0, PI + QUARTER_PI);
+  }
+
+  //NOSE
+  fill(0);
+  ellipse(0, 10, 100, 70);
+  rotate(PI);
+
+  //MOUTH
+  noFill();
+  arc(30, 25, 60, 60, HALF_PI, PI);
+  arc(-30, 25, 60, 60, 0, HALF_PI);
+
+
+
+}
+    </script>
+  </body>
+</html>
